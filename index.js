@@ -32,6 +32,6 @@ app.use(passport.initialize());
 
 appRoutes(app); 
 
-app.listen(3000, function(){
+app.listen(8080, function(){
 	console.log("Running on port : 3000");
 })
