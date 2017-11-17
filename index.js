@@ -1,6 +1,7 @@
 var express= require('express');
 var bodyParser = require('body-parser');
 var passport = require('passport');
+var cookieParser = require('cookie-parser');
 var mongoose = require('mongoose');
 
 var config = require('./config/database');
@@ -18,7 +19,7 @@ var options = {
 mongoose.connect(config.mongoUrl, options).then(
 	() => { console.log("database connected successfully") },
 	err => { console.log("Error while connecting to database.") }
-);
+); 
 
 
 var appRoutes = require('./src/route');
@@ -28,6 +29,7 @@ var app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended:false }));
+app.use(cookieParser());
 app.use(passport.initialize());
 
 appRoutes(app); 
