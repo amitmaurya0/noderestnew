@@ -5,22 +5,16 @@ require('./../../config/passport')(passport);
 var jwt = require('jsonwebtoken');
 var router = require('express').Router();
 var user = require('./user/index');
+var blog = require('./blog/index');
 
 router.use('/user', user);
-router.use('/debug',  function(req, res, next){
-    console.log(req.get('Authorization'));
-    next();
-  }, function(req, res){
-    res.json("debugging");
+
+
+router.use('/myblog', passport.authenticate('jwt', {session:false}), blog);
+
+
+router.use('/debug', passport.authenticate('jwt', {session:false}), function(req, res){
+    res.json({status:"success"});
 });
-
-router.get('/book', passport.authenticate('jwt', {session:false}), function(req, res){
-	
-		console.log('Hello');
-		res.json({status:"success"});
-	
-})
-
-
 
 module.exports = router;
